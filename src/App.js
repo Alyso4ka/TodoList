@@ -6,21 +6,6 @@ import TodoListFooter from "./TodoListFooter";
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.newTaskTitleRef = React.createRef();
-
-
-        setTimeout(() => {
-            let newTask = {title: "JS", isDone: false, priority: "low"};
-            let newTasks = [...this.state.tasks, newTask];
-            this.setState({
-                tasks: newTasks
-            });
-        }, 2000);
-
-    }
-
     state = {
 
         tasks: [
@@ -34,11 +19,11 @@ class App extends React.Component {
         filterValue: "All"
     };
 
-    addTask = () => {
-        let newTitle = this.newTaskTitleRef.current.value;
-        this.newTaskTitleRef.current.value = '';
+    addTask = (newText) => {
+        // let newTitle = this.newTaskTitleRef.current.value;
+        // this.newTaskTitleRef.current.value = '';
         let newTask = {
-            title: newTitle,
+            title: newText,
             isDone: false,
             priority: "low"
         };
@@ -48,6 +33,21 @@ class App extends React.Component {
         })
 
     };
+
+    changeStatus = (status, task) => {
+       let tasksCopy = this.state.tasks.map(t => {
+           if (t == task) {
+               return {...t, isDone: status}
+           }
+
+           return t;
+       });
+
+        this.setState({
+            tasks: tasksCopy
+        })
+
+    }
 
     changeFilter = (newfilterValue) => {
         this.setState({filterValue: newfilterValue});
@@ -68,7 +68,9 @@ class App extends React.Component {
                     {/*        <button onClick={this.onAddTaskClick}>Add</button>*/}
                     {/*    </div>*/}
                     {/*</div>*/}
-                    <TodoListTasks tasks={this.state.tasks.filter( (t) => {
+                    <TodoListTasks
+                        changeStatus={this.changeStatus}
+                        tasks={this.state.tasks.filter( (t) => {
                         switch (this.state.filterValue) {
                             case 'All': return true;
                             case 'Completed': return t.isDone;
