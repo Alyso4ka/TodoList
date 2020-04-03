@@ -3,6 +3,11 @@ import './App.css';
 import App from "./App";
 
 class TodoListFooter extends React.Component {
+
+    state = {
+        isHidden: false
+    }
+
     render = () => {
 
 
@@ -15,6 +20,9 @@ class TodoListFooter extends React.Component {
                 <button onClick={ () => {this.props.changeFilter('All')}} className={classForAll}>All</button>
                 <button onClick={ () => {this.props.changeFilter('Completed')}} className={classForCompleted}>Completed</button>
                 <button onClick={ () => {this.props.changeFilter('Active')}} className={classForActive}>Active</button>
+                {!this.state.isHidden && <span onClick={() => {alert('Hide')} }>Hide</span>}
+                {this.state.isHidden && <span onClick={() => {alert('Show')} }>Show</span>}
+
             </div>
 
         );
