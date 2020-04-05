@@ -3,6 +3,10 @@ import './App.css';
 import App from "./App";
 class TodoListHeader extends React.Component {
 
+    state = {
+        error: false
+    }
+
  newTaskTitleRef = React.createRef();
 
 
@@ -13,11 +17,17 @@ class TodoListHeader extends React.Component {
     }
 
     render = () => {
+
+        const inputClassName = this.state.error ? 'error' : "";
+
+
+
+;
         return (
             <div className="todoList-header">
                 <h3 className="todoList-header__title">What to Learn</h3>
                 <div className="todoList-newTaskForm">
-                    <input type="text" placeholder="New task name" ref={this.newTaskTitleRef}/>
+                    <input onClick={this.setState} className={inputClassName} type="text" placeholder="New task name" ref={this.newTaskTitleRef}/>
                     <button onClick={this.onAddTaskButtonClick}>Add</button>
                 </div>
             </div>
