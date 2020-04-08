@@ -9,15 +9,17 @@ class App extends React.Component {
     state = {
 
         tasks: [
-            {title: "JS", isDone: false, priority: "low"},
-            {title: "CSS", isDone: true, priority: "high"},
-            {title: "React", isDone: false, priority: "low"},
-            {title: "SaSS", isDone: true, priority: "low"},
-            {title: "Redux", isDone: false, priority: "low"}
+            {id: 1, title: "JS", isDone: false, priority: "low"},
+            {id: 2, title: "CSS", isDone: true, priority: "high"},
+            {id: 3, title: "React", isDone: false, priority: "low"},
+            {id: 4, title: "SaSS", isDone: true, priority: "low"},
+            {id: 5, title: "Redux", isDone: false, priority: "low"}
 
         ],
         filterValue: "All"
     };
+
+    nextTaskId = 6; // новое свойство для id
 
     addTask = (newText) => {
         // let newTitle = this.newTaskTitleRef.current.value;
@@ -25,8 +27,10 @@ class App extends React.Component {
         let newTask = {
             title: newText,
             isDone: false,
-            priority: "low"
+            priority: "low",
+            id: this.nextTaskId
         };
+        this.nextTaskId++; // увелчивае id таски на 1
         let newTasks = [...this.state.tasks, newTask];
         this.setState({
             tasks: newTasks

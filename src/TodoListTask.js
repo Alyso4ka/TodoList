@@ -18,7 +18,7 @@ class TodoListTask extends React.Component {
                 <div className={taskClassName} >
                 <input type="checkbox" checked={this.props.task.isDone}
                        onChange={this.onIsDoneChanged} />
-                <span>{this.props.task.title}, priority: {this.props.task.priority}</span>
+                <span>{this.props.task.id} - {this.props.task.title}, priority: {this.props.task.priority}</span>
             </div>
 
         );
