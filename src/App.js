@@ -38,9 +38,9 @@ class App extends React.Component {
 
     };
 
-    changeStatus = (status, task) => {
+    changeStatus = (status, taskId) => {
        let tasksCopy = this.state.tasks.map(t => {
-           if (t == task) {
+           if (t.id == taskId) {
                return {...t, isDone: status}
            }
 
