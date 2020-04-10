@@ -2,10 +2,29 @@ import React from 'react';
 
 
 class TodoListTask extends React.Component {
+    state = {
+        editMode: false
+    }
+
+    activateEditMode = () => {
+        this.setState({editMode: true})
+    }
+
+    deactivateEditMode = () => {
+        this.setState({editMode: false})
+    }
+
     onIsDoneChanged = (e) => {
 
         this.props.changeStatus(e.currentTarget.checked, this.props.task.id);
     }
+
+    onTitleChanged = (e) => {
+        this.props.changeStatus(e.currentTarget.checked, this.props.task.id);
+        alert(e.currentTarget.value);
+
+    }
+
 
 
     render = () => {
@@ -17,14 +36,15 @@ class TodoListTask extends React.Component {
             <div className={taskClassName}>
                 <input type="checkbox" checked={this.props.task.isDone}
                        onChange={this.onIsDoneChanged}/>
-                {false ? <input/>
-                    : <span>{this.props.task.id} - {this.props.task.title}</span>
+                {this.state.editMode
+                    ? <input autoFocus={true} onBlur={this.deactivateEditMode} value={this.props.task.title} onChange={this.onTitleChanged}/>// onBlur - когда фокус уходит deactivateEditMode, убираем инпут - возвращаем спан
+                    : <span onClick={this.activateEditMode}>{this.props.task.id} - {this.props.task.title}</span>// если editMode тру, то показываем инпуты, если фолс то спаны (как и было)
 
-                        },
-                            priority: {this.props.task.priority}
+                },
+                priority: {this.props.task.priority}
                 < /div>
                     );
-                }
-                }
+                    }
+                    }
 
-                export default TodoListTask;
+                    export default TodoListTask;
