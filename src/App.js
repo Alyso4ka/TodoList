@@ -38,19 +38,49 @@ class App extends React.Component {
 
     };
 
-    changeStatus = (status, taskId) => {
-       let tasksCopy = this.state.tasks.map(t => {
-           if (t.id == taskId) {
-               return {...t, isDone: status}
-           }
-
-           return t;
-       });
-
+    changeTask = (taskId, obj) => {
+        let tasksCopy = this.state.tasks.map(t => {
+            if (t.id == taskId) {
+                return {...t, ...obj };
+            }
+            return t;
+        });
         this.setState({
             tasks: tasksCopy
         })
+    }
 
+    changeStatus = (status, taskId) => {
+        let obj = {
+            isDone: status
+        }
+       let tasksCopy = this.state.tasks.map(t => {
+           if (t.id == taskId) {
+               // return {...t, isDone: status}
+               return {...t, ...obj };
+           }
+           return t;
+       });
+       this.setState({
+            tasks: tasksCopy
+        })
+    }
+
+
+    changeTitle = (title, taskId) => {
+        let obj = {
+            title: title
+        }
+        let tasksCopy = this.state.tasks.map(t => {
+            if (t.id == taskId) {
+                // return {...t, title: title}
+                return {...t, ...obj}
+            }
+            return t;
+        });
+        this.setState({
+            tasks: tasksCopy
+        })
     }
 
     changeFilter = (newfilterValue) => {
@@ -74,6 +104,7 @@ class App extends React.Component {
                     {/*</div>*/}
                     <TodoListTasks
                         changeStatus={this.changeStatus}
+                        changeTitle={this.changeTitle}
                         tasks={this.state.tasks.filter( (t) => {
                         switch (this.state.filterValue) {
                             case 'All': return true;

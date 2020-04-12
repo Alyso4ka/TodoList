@@ -15,13 +15,12 @@ class TodoListTask extends React.Component {
     }
 
     onIsDoneChanged = (e) => {
-
         this.props.changeStatus(e.currentTarget.checked, this.props.task.id);
     }
 
     onTitleChanged = (e) => {
-        this.props.changeStatus(e.currentTarget.checked, this.props.task.id);
-        alert(e.currentTarget.value);
+        this.props.changeTitle(e.currentTarget.value, this.props.task.id);
+
 
     }
 
