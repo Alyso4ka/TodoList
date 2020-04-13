@@ -8,18 +8,38 @@ class App extends React.Component {
 
     state = {
 
-        tasks: [
-            {id: 1, title: "JS", isDone: false, priority: "low"},
-            {id: 2, title: "CSS", isDone: true, priority: "high"},
-            {id: 3, title: "React", isDone: false, priority: "low"},
-            {id: 4, title: "SaSS", isDone: true, priority: "low"},
-            {id: 5, title: "Redux", isDone: false, priority: "low"}
-
-        ],
+        tasks: [],
         filterValue: "All"
     };
 
-    nextTaskId = 6; // новое свойство для id
+    componentDidMount = () => {
+        this.restoreState();
+    }
+
+    saveState = () => {
+        let stateAsString = JSON.stringify(this.state)
+
+        localStorage.setItem('state', stateAsString)
+
+    }
+
+    restoreState = () => {
+        let stateAsString = localStorage.getItem('state');
+        if (stateAsString) {
+            let state = JSON.parse(stateAsString);
+
+            state.tasks.forEach(t => {
+                if (t.id >= this.nextTaskId) {
+                    this.nextTaskId = t.id +1;
+                }
+            })
+
+            this.setState(state);
+        }
+    }
+
+
+    nextTaskId = 0; // новое свойство для id
 
     addTask = (newText) => {
         // let newTitle = this.newTaskTitleRef.current.value;
@@ -34,14 +54,18 @@ class App extends React.Component {
         let newTasks = [...this.state.tasks, newTask];
         this.setState({
             tasks: newTasks
-        })
+        }, () => {
+            this.saveState();
+        });
+
+
 
     };
 
     changeTask = (taskId, obj) => {
         let tasksCopy = this.state.tasks.map(t => {
             if (t.id == taskId) {
-                return {...t, ...obj };
+                return {...t, ...obj};
             }
             return t;
         });
@@ -54,34 +78,16 @@ class App extends React.Component {
         let obj = {
             isDone: status
         }
-       let tasksCopy = this.state.tasks.map(t => {
-           if (t.id == taskId) {
-               // return {...t, isDone: status}
-               return {...t, ...obj };
-           }
-           return t;
-       });
-       this.setState({
-            tasks: tasksCopy
-        })
+        this.changeTask(taskId, obj)
+
     }
 
 
     changeTitle = (title, taskId) => {
-        let obj = {
-            title: title
-        }
-        let tasksCopy = this.state.tasks.map(t => {
-            if (t.id == taskId) {
-                // return {...t, title: title}
-                return {...t, ...obj}
-            }
-            return t;
-        });
-        this.setState({
-            tasks: tasksCopy
-        })
+        let obj = {title: title}
+        this.changeTask(taskId, obj)
     }
+
 
     changeFilter = (newfilterValue) => {
         this.setState({filterValue: newfilterValue});
@@ -105,16 +111,20 @@ class App extends React.Component {
                     <TodoListTasks
                         changeStatus={this.changeStatus}
                         changeTitle={this.changeTitle}
-                        tasks={this.state.tasks.filter( (t) => {
-                        switch (this.state.filterValue) {
-                            case 'All': return true;
-                            case 'Completed': return t.isDone;
-                            case 'Active': return !t.isDone;
-                            default: return true;
-                        }
+                        tasks={this.state.tasks.filter((t) => {
+                            switch (this.state.filterValue) {
+                                case 'All':
+                                    return true;
+                                case 'Completed':
+                                    return t.isDone;
+                                case 'Active':
+                                    return !t.isDone;
+                                default:
+                                    return true;
+                            }
 
 
-                    })}/>
+                        })}/>
                     <TodoListFooter changeFilter={this.changeFilter} filterValue={this.state.filterValue}/>
                 </div>
             </div>
