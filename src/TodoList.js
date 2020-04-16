@@ -19,12 +19,12 @@ class TodoList extends React.Component {
     saveState = () => {
         let stateAsString = JSON.stringify(this.state)
 
-        localStorage.setItem('state', stateAsString)
+        localStorage.setItem('state-' + this.props.id, stateAsString)
 
     }
 
     restoreState = () => {
-        let stateAsString = localStorage.getItem('state');
+        let stateAsString = localStorage.getItem('state-' + this.props.id);
         if (stateAsString) {
             let state = JSON.parse(stateAsString);
 
