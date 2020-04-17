@@ -97,7 +97,7 @@ class TodoList extends React.Component {
         return (
 
                 <div className="todoList">
-                    <TodoListHeader addTask={this.addTask}/>
+                    <TodoListHeader addTask={this.addTask} title={this.props.title}/>
                     {/*<div className="todoList-header">*/}
                     {/*    <h3 className="todoList-header__title">What to Learn</h3>*/}
                     {/*    <div className="todoList-newTaskForm">*/}

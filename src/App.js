@@ -20,14 +20,17 @@ class App extends React.Component {
 
     render = () => {
 
+        let todoLists = this.state.todolists.map(tl =>  <TodoList id={tl.id} title={tl.title}/>)
+
         return (
+            <div>
+            <div>
+                <input/> <button>+</button>
+            </div>
+
             <div className="App">
-
-                {this.state.todolists.map(tl =>  <TodoList id={tl.id} title={tl.title}/>)}
-
-               
-
-
+                {todoLists}
+            </div>
             </div>
         );
     }
