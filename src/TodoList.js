@@ -29,8 +29,8 @@ class TodoList extends React.Component {
             let state = JSON.parse(stateAsString);
 
             state.tasks.forEach(t => {
-                if (t.id >= this.nextTaskId) {
-                    this.nextTaskId = t.id +1;
+                if (t.id >= this.nextItemId) {
+                    this.nextItemId = t.id +1;
                 }
             })
 
@@ -39,19 +39,19 @@ class TodoList extends React.Component {
     }
 
 
-    nextTaskId = 0; // новое свойство для id
+    nextItemId = 0; // новое свойство для id
 
     addTask = (newText) => {
         // let newTitle = this.newTaskTitleRef.current.value;
         // this.newTaskTitleRef.current.value = '';
-        let newTask = {
+        let newItem = {
             title: newText,
             isDone: false,
             priority: "low",
-            id: this.nextTaskId
+            id: this.nextItemId
         };
-        this.nextTaskId++; // увелчивае id таски на 1
-        let newTasks = [...this.state.tasks, newTask];
+        this.nextItemId++; // увелчивае id таски на 1
+        let newTasks = [...this.state.tasks, newItem];
         this.setState({
             tasks: newTasks
         }, () => {

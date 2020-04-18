@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Cloud-sms/.idea/Cloud-sms.iml" filepath="$PROJECT_DIR$/../Cloud-sms/.idea/Cloud-sms.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/incubator.iml" filepath="$PROJECT_DIR$/.idea/incubator.iml" />
     </modules>
   </component>

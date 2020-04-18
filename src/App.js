@@ -1,22 +1,58 @@
 import React from 'react';
 import './App.css';
 import TodoList from "./TodoList";
+import AddNewItemForm from "./AddNewItemForm";
 
 
 
 
 class App extends React.Component {
+    nextItemId = 0;
+
 
     state = {
-        todolists: [{
-            id: 1,
-            title: 'What to learn'
-        },
-            {
-                id: 2,
-                title: 'Important'
-            }]
+        todolists: []
     }
+
+    addTodolist = (title) => {
+        let newItem = {
+            title: title,
+
+            id: this.nextItemId
+        };
+        this.nextItemId++;
+    this.setState({
+        todolists: [...this.state.todolists, newItem]
+    }, () => {
+        this.saveState();
+    });
+    }
+    componentDidMount = () => {
+        this.restoreState();
+    }
+
+    saveState = () => {
+        let stateAsString = JSON.stringify(this.state)
+
+        localStorage.setItem('todolists', stateAsString)
+
+    }
+
+    restoreState = () => {
+        let stateAsString = localStorage.getItem('todolists');
+        if (stateAsString) {
+            let state = JSON.parse(stateAsString);
+
+            state.todolists.forEach(t => {
+                if (t.id >= this.nextItemId) {
+                    this.nextItemId = t.id +1;
+                }
+            })
+
+            this.setState(state);
+        }
+    }
+
 
     render = () => {
 
@@ -25,7 +61,7 @@ class App extends React.Component {
         return (
             <div>
             <div>
-                <input/> <button>+</button>
+                <AddNewItemForm addItem={this.addTodolist}/>
             </div>
 
             <div className="App">
